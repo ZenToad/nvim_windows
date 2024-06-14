@@ -193,6 +193,15 @@ return {{
             },
         })
 
+        lsp.configure('clangd', {
+          cmd = { "clangd", "--compile-commands-dir=path/to/your/compile_commands" },
+          filetypes = { "c", "cpp", "objc", "objcpp" },
+          root_dir = function(fname)
+            return require('lspconfig').util.root_pattern("compile_commands.json")(fname) or
+                   require('lspconfig').util.root_pattern(".git")(fname)
+          end,
+        })
+
         lsp.setup()
         -- You need to setup `cmp` after lsp-zero
         local cmp = require('cmp')
