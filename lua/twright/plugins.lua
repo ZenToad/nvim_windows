@@ -158,6 +158,13 @@ return {{
     'L3MON4D3/LuaSnip'
 },{
     'github/copilot.vim',
+    config = function()
+        vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+          expr = true,
+          replace_keycodes = false
+        })
+        vim.g.copilot_no_tab_map = tru
+    end
 },{
   "folke/which-key.nvim",
   event = "VeryLazy",
