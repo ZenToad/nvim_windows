@@ -58,10 +58,20 @@ return {{
     },
     config = function()
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-        vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+        vim.keymap.set('n', '<leader>pf', function()
+            builtin.find_files({})
+        end)
+        vim.keymap.set('n', '<C-p>', function()
+            builtin.git_files({recurse_submodules=true})
+        end)
         vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({search = vim.fn.input("Grep > ")})
+            builtin.live_grep({})
+        end)
+        vim.keymap.set('n', '<F12>', function()
+            builtin.lsp_definitions({})
+        end)
+        vim.keymap.set('n', '<F11>', function()
+            builtin.lsp_implementations({})
         end)
     end
 },{
@@ -123,16 +133,6 @@ return {{
     config = function()
         vim.g.delimitMate_expand_cr=1
     end
-},{
-    'neovim/nvim-lspconfig',
-    dependencies = {
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    },
-    -- config = function()
-    -- (Optional) Configure lua language server for neovim
-    -- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-    -- end
 },{                                      -- Optional
     'williamboman/mason.nvim',
     config = function()
@@ -141,6 +141,15 @@ return {{
     end,
 },{
     'williamboman/mason-lspconfig.nvim',
+},{
+    'neovim/nvim-lspconfig',
+    dependencies = {
+        'williamboman/mason.nvim',
+        'williamboman/mason-lspconfig.nvim',
+    },
+    -- config = function()
+    --     require('lspconfig').pyright.setup{}
+    -- end
 },{
     'hrsh7th/nvim-cmp' -- Required
 },{
@@ -187,7 +196,7 @@ return {{
         require('mason-lspconfig').setup({
             -- Replace the language servers listed here 
             -- with the ones you want to install
-            ensure_installed = {'tsserver', 'rust_analyzer'},
+            ensure_installed = {'pyright', 'tsserver', 'rust_analyzer'},
             handlers = {
                 lsp.default_setup,
             },
