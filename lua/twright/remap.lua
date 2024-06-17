@@ -64,8 +64,10 @@ vim.api.nvim_command([[autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>]
 vim.keymap.set('t', 'ESC', '<C-\\><C-n>')
 
 -- open vimrc director
-vim.keymap.set('n', '<leader>ev', ':tabnew<CR>:cd ~/AppData/Local/nvim<CR>:NERDTreeToggle<CR>')
+vim.keymap.set('n', '<leader>ev', ':tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERDTreeToggle<CR>')
 
-vim.keymap.set('n', '<leader>m', ':TermExec cmd="build\\build.bat" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
-vim.keymap.set('n', '<leader>t', ':TermExec cmd="build\\test.bat" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
+-- vim.keymap.set('n', '<leader>m', ':TermExec cmd="build\\build.bat" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
+vim.keymap.set('n', '<leader>m', ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
+-- vim.keymap.set('n', '<leader>m', ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
+-- vim.keymap.set('n', '<leader>t', ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', {silent = false, noremap = true})
 
