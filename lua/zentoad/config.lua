@@ -114,9 +114,9 @@ vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERD
 vim.keymap.set("n", "<leader>m", ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
 
 -- Autocmd for quickfix buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
-    pattern = "quickfix",
-    callback = function()
-        vim.keymap.set("n", "<CR>", "<CR>", { buffer = true, noremap = true })
-    end,
-})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--     pattern = "quickfix",
+--     callback = function()
+--         vim.keymap.set("n", "<CR>", "<CR>", { buffer = true, noremap = true })
+--     end,
+-- })

@@ -20,12 +20,23 @@ return {
 
             require('mason').setup({})
             require('mason-lspconfig').setup({
-              ensure_installed = {'lua_ls'},
-              handlers = {
-                function(server_name)
-                  require('lspconfig')[server_name].setup({})
-                end,
-              },
+                -- ensure_installed = {'lua_ls', 'clangd'},
+                ensure_installed = {},
+                handlers = {
+                    function(server_name)
+                        require('lspconfig')[server_name].setup({})
+                    end,
+                    clangd = function()
+                        require('lspconfig').clangd.setup({
+                            cmd = {"clangd"},
+                            filetypes = { "c", "cpp", "objc", "objcpp" },
+                            root_dir = function(fname)
+                                return require('lspconfig').util.root_pattern("compile_commands.json")(fname) or
+                                require('lspconfig').util.root_pattern(".git")(fname)
+                            end,
+                        })
+                    end
+                },
             })
         end,
     }
