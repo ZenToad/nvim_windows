@@ -190,6 +190,21 @@ return {
 
         end
     },
+    -- Telescope ui
+    {
+        'nvim-telescope/telescope-ui-select.nvim',
+        config = function()
+            require("telescope").setup({
+                extensions = {
+                  ["ui-select"] = {
+                    require("telescope.themes").get_dropdown {}
+                  }
+                }
+            })
+
+            require("telescope").load_extension("ui-select")    
+        end
+    },
     -- -- File Navigation: Harpoon
     {
         'theprimeagen/harpoon',
@@ -207,7 +222,7 @@ return {
         end
     },
 
-    -- -- Commenting: Nerdcommenter
+    -- Commenting: Nerdcommenter
     {
         'preservim/nerdcommenter',
         config = function()
@@ -219,6 +234,7 @@ return {
             vim.g.NERDAltDelims_c = 1
         end,
     },
+    -- Manage ctags
     {
         "ludovicchabant/vim-gutentags",
         config = function()
@@ -246,25 +262,61 @@ return {
             vim.g.delimitMate_expand_cr = 1
         end
     },
-    -- -- LSP Installer: Mason
-    -- {
-    --     'williamboman/mason.nvim',
-    --     config = function()
-    --         require('mason').setup({})
-    --     end,
-    -- },
-    -- -- LSP Config Helper: Mason-LSPConfig
-    -- {
-    --     'williamboman/mason-lspconfig.nvim',
-    -- },
-    -- -- LSP Config: LSPConfig
-    -- {
-    --     'neovim/nvim-lspconfig',
-    --     dependencies = {
-    --         'williamboman/mason.nvim',
-    --         'williamboman/mason-lspconfig.nvim',
-    --     },
-    -- },
+    -- Key Binding Helper: Which-Key
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {}
+    },
+    -- AI Code Completion: Copilot
+    {
+        'github/copilot.vim',
+        -- config = function()
+        --     vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+        --         expr = true,
+        --         replace_keycodes = false
+        --     })
+        --     -- vim.g.copilot_no_tab_map = true
+        -- end
+    },
+    -- LSP Installer: Mason
+    {
+        'williamboman/mason.nvim',
+        config = function()
+            require('mason').setup()
+        end,
+    },
+    -- LSP Config Helper: Mason-LSPConfig
+    {
+        'williamboman/mason-lspconfig.nvim',
+        config = function()
+            require('mason-lspconfig').setup({
+                ensure_installed = {'clangd', 'lua_ls', 'tsserver'},
+        })
+        end
+    },
+    -- LSP Config: LSPConfig
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+        },
+        config = function()
+            local lspconfig = require('lspconfig')
+            lspconfig.lua_ls.setup({})
+            lspconfig.tsserver.setup({})
+            lspconfig.clangd.setup({})
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+            vim.keymap.set({'n', 'v'}, '<Leader>cf', vim.lsp.buf.code_action, {})
+        end
+
+    },
     -- -- Autocompletion: Nvim-Cmp
     -- {
     --     'hrsh7th/nvim-cmp',
@@ -276,27 +328,6 @@ return {
     -- -- Snippets: LuaSnip
     -- {
     --     'L3MON4D3/LuaSnip'
-    -- },
-    -- -- AI Code Completion: Copilot
-    -- {
-    --     'github/copilot.vim',
-    --     config = function()
-    --         vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
-    --             expr = true,
-    --             replace_keycodes = false
-    --         })
-    --         vim.g.copilot_no_tab_map = true
-    --     end
-    -- },
-    -- -- Key Binding Helper: Which-Key
-    -- {
-    --     "folke/which-key.nvim",
-    --     event = "VeryLazy",
-    --     init = function()
-    --         vim.o.timeout = true
-    --         vim.o.timeoutlen = 300
-    --     end,
-    --     opts = {}
     -- },
     -- -- Rust Support: Rust.Vim
     -- {
