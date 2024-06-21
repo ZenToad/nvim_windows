@@ -22,7 +22,7 @@ return {
                     -- additional_vim_regex_highlighting = false,
                 },
             }
-            require 'nvim-treesitter.install'.compilers = { "clang" }
+            require('nvim-treesitter.install').compilers = { "clang" }
         end
     },
 }
