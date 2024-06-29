@@ -1,5 +1,6 @@
 return {
     {'williamboman/mason.nvim'},
+    {'jay-babu/mason-nvim-dap.nvim'},
     {'williamboman/mason-lspconfig.nvim'},
     {'neovim/nvim-lspconfig'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -19,6 +20,7 @@ return {
             end)
 
             require('mason').setup({})
+            require("mason-nvim-dap").setup()
             require('mason-lspconfig').setup({
                 -- ensure_installed = {'lua_ls', 'clangd'},
                 ensure_installed = {},

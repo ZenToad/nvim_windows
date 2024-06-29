@@ -113,10 +113,14 @@ vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERD
 -- Build command
 vim.keymap.set("n", "<leader>m", ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
 
--- Autocmd for quickfix buffer
--- vim.api.nvim_create_autocmd("BufReadPost", {
---     pattern = "quickfix",
---     callback = function()
---         vim.keymap.set("n", "<CR>", "<CR>", { buffer = true, noremap = true })
---     end,
--- })
+-- source init.lua
+vim.keymap.set("n", "<C-I>", ":source ./init.lua<CR>", { silent=false, noremap=true})
+
+-- debugging keybindings
+vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F10>', '<Cmd>lua require"dap".step_over()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F11>', '<Cmd>lua require"dap".step_into()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua require"dap".step_out()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>b', '<Cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>B', '<Cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })
+

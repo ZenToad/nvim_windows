@@ -1,4 +1,8 @@
     return {
+    -- surround
+    {
+        'tpope/vim-surround',
+    },
     -- File Navigation: Harpoon
     {
         'theprimeagen/harpoon',
