@@ -111,7 +111,7 @@ vim.keymap.set("t", "ESC", "<C-\\><C-n>")
 vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERDTreeToggle<CR>")
 
 -- Build command
-vim.keymap.set("n", "<leader>m", ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
+-- vim.keymap.set("n", "<leader>m", ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
 
 -- source init.lua
 vim.keymap.set("n", "<C-I>", ":source ./init.lua<CR>", { silent=false, noremap=true})
