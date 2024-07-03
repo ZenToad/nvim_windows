@@ -20,7 +20,6 @@ return {
             end)
 
             require('mason').setup({})
-            require("mason-nvim-dap").setup()
             require('mason-lspconfig').setup({
                 -- ensure_installed = {'lua_ls', 'clangd'},
                 ensure_installed = {},

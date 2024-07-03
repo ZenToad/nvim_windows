@@ -114,7 +114,7 @@ vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERD
 vim.keymap.set("n", "<leader>m", ':TermExec cmd="build\\build.bat sandbox" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
 
 -- source init.lua
-vim.keymap.set("n", "<C-I>", ":source ./init.lua<CR>", { silent=false, noremap=true})
+vim.keymap.set("n", "<leader>af", ":source ./init.lua<CR>", { silent=false, noremap=true})
 
 -- debugging keybindings
 vim.api.nvim_set_keymap('n', '<F5>', '<Cmd>lua require"dap".continue()<CR>', { noremap = true, silent = true })
