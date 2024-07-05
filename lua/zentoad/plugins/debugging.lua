@@ -1,0 +1,85 @@
+return {
+    -- nvim-dap
+    -- {
+    --     'mfussenegger/nvim-dap',
+    --     dependencies = {
+    --         'rcarriga/nvim-dap-ui',
+    --         'theHamsta/nvim-dap-virtual-text',
+    --         'nvim-neotest/nvim-nio',  -- Ensure nvim-nio is installed
+    --     },
+    --     config = function()
+    --         local dap = require('dap')
+    --         local dapui = require('dapui')
+    --
+    --         dap.set_log_level('TRACE')
+    --
+    --         dap.adapters.lldb = {
+    --             type = 'executable',
+    --             command ='C:\\Program Files\\LLVM\\bin\\lldb-dap.exe',
+    --             name = 'lldb'
+    --         }
+    --         dap.configurations.cpp = {
+    --             {
+    --                 name = 'Launch',
+    --                 type = 'lldb',
+    --                 request = 'launch',
+    --                 program = function()
+    --                     return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    --                 end,
+    --                 cwd = '${workspaceFolder}',
+    --                 stopOnEntry = false,
+    --                 args = {},
+    --
+    --                 -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
+    --                 --
+    --                 --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+    --                 --
+    --                 -- Otherwise you might get the following error:
+    --                 --
+    --                 --    Error on launch: Failed to attach to the target process
+    --                 --
+    --                 -- But you should be aware of the implications:
+    --                 -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
+    --                 -- runInTerminal = false,
+    --             },
+    --         }
+    --         dap.configurations.c = dap.configurations.cpp
+    --
+    --         -- Enable virtual text for variable values
+    --         require('nvim-dap-virtual-text').setup()
+    --
+    --         -- Set up DAP UI
+    --         dapui.setup()
+    --
+    --         -- Keybindings for DAP
+    --         vim.api.nvim_set_keymap('n', '<F5>', "<cmd>lua require'dap'.continue()<CR>", { noremap = true, silent = true })
+    --         vim.api.nvim_set_keymap('n', '<F10>', "<cmd>lua require'dap'.step_over()<CR>", { noremap = true, silent = true })
+    --         vim.api.nvim_set_keymap('n', '<F11>', "<cmd>lua require'dap'.step_into()<CR>", { noremap = true, silent = true })
+    --         vim.api.nvim_set_keymap('n', '<F12>', "<cmd>lua require'dap'.step_out()<CR>", { noremap = true, silent = true })
+    --
+    --         -- Open the DAP UI automatically when debugging starts
+    --         dap.listeners.after.event_initialized['dapui_config'] = function()
+    --             dapui.open()
+    --         end
+    --
+    --         -- Close the DAP UI automatically when debugging stops
+    --         dap.listeners.before.event_terminated['dapui_config'] = function()
+    --             dapui.close()
+    --         end
+    --         dap.listeners.before.event_exited['dapui_config'] = function()
+    --             dapui.close()
+    --         end
+    --     end,
+    -- },
+    -- {
+    --     'rcarriga/nvim-dap-ui',
+    --     dependencies = { 'mfussenegger/nvim-dap' }
+    -- },
+    -- {
+    --     'theHamsta/nvim-dap-virtual-text',
+    --     dependencies = { 'mfussenegger/nvim-dap' }
+    -- },
+    -- {
+    --     'nvim-neotest/nvim-nio'
+    -- },
+}
