@@ -6,8 +6,6 @@ return {
         dependencies = { 
             'nvim-lua/plenary.nvim',
             'nvim-tree/nvim-web-devicons',
-            -- Performance optimization
-            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
         },
         config = function()
             local telescope = require('telescope')
@@ -37,12 +35,6 @@ return {
                     },
                 },
                 extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    },
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown({})
                     }
@@ -50,7 +42,6 @@ return {
             })
             
             -- Load extensions
-            telescope.load_extension('fzf')
             telescope.load_extension('ui-select')
             
             -- Modern 2025 keybindings
