@@ -1,25 +1,26 @@
 return {
-	-- Icons: Nvim-Web-Devicons
+	-- Icons for file explorers and UI
 	{
 		'nvim-tree/nvim-web-devicons',
 		config = function()
-		    require'nvim-web-devicons'.setup { default = true; }
+		    require('nvim-web-devicons').setup({ default = true })
 		end
 	},
-	-- vim-devicons for NERDTree icons
+	-- File Explorer: NERDTree (keeping for compatibility)
 	{
-		'ryanoasis/vim-devicons',
-		dependencies = { 'nvim-tree/nvim-web-devicons' },
-		config = function()
-		    require'nvim-web-devicons'.setup { default = true; }
-		end
-	},
-	{
-	-- File Explorer: NERDTree
 		"preservim/nerdtree",
+		dependencies = { 
+			'nvim-tree/nvim-web-devicons',
+			'ryanoasis/vim-devicons' -- NERDTree icon support
+		},
 		config = function()
-			vim.keymap.set("n", "<C-k><C-b>", vim.cmd.NERDTreeToggle)
-			vim.keymap.set("i", "<C-k><C-b>", vim.cmd.NERDTreeToggle)
+			-- NERDTree keybindings (moved from config.lua for better organization)
+			vim.keymap.set("n", "<C-k><C-b>", vim.cmd.NERDTreeToggle, { desc = "Toggle NERDTree" })
+			vim.keymap.set("i", "<C-k><C-b>", vim.cmd.NERDTreeToggle, { desc = "Toggle NERDTree" })
+			
+			-- NERDTree settings
+			vim.g.NERDTreeShowHidden = 1 -- Show hidden files
+			vim.g.NERDTreeIgnore = {'\\.git$', 'node_modules', '\\.DS_Store'} -- Ignore patterns
 		end,
 	},
 }

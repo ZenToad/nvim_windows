@@ -40,7 +40,7 @@ return {
       -- mason for other servers (clangd, etc.)
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'rust_analyzer' },
+        ensure_installed = { 'clangd' }, -- Removed rust_analyzer - rustaceanvim handles this
         handlers = {
           function(server) lspconfig[server].setup({}) end,
           clangd = function()
@@ -51,29 +51,7 @@ return {
               end,
             })
           end,
-          rust_analyzer = function()
-            lspconfig.rust_analyzer.setup({
-              settings = {
-                ['rust-analyzer'] = {
-                  cargo = {
-                    allFeatures = true,
-                  },
-                  checkOnSave = {
-                    command = "cargo",
-                    args = { "check" },
-                  },
-                  procMacro = {
-                    enable = true,
-                  },
-                  inlayHints = {
-                    enable = true,
-                    parameterHints = { enable = true },
-                    typeHints = { enable = true },
-                  },
-                },
-              },
-            })
-          end,
+          -- rust_analyzer removed - rustaceanvim plugin handles Rust LSP automatically
         },
       })
 

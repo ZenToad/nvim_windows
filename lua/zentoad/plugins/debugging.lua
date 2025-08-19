@@ -6,7 +6,22 @@ return {
         config = function()
             require('mason-nvim-dap').setup({
                 ensure_installed = { 'codelldb' },
-                automatic_installation = true,
+                handlers = {
+                    function(config)
+                        require('mason-nvim-dap').default_setup(config)
+                    end,
+                    codelldb = function(config)
+                        config.adapters = {
+                            type = "server",
+                            port = "${port}",
+                            executable = {
+                                command = "codelldb",
+                                args = {"--port", "${port}"}
+                            }
+                        }
+                        require('mason-nvim-dap').default_setup(config)
+                    end
+                }
             })
         end,
     },
@@ -25,56 +40,14 @@ return {
 
             dap.set_log_level('TRACE')
     --
-            -- LLDB adapter for C/C++ and Rust
+            -- LLDB adapter for C/C++ 
             dap.adapters.lldb = {
                 type = 'executable',
                 command = 'C:\\Program Files\\LLVM\\bin\\lldb-dap.exe',
                 name = 'lldb'
             }
             
-            -- CodeLLDB adapter for better Rust support (Mason-installed)
-            local function get_codelldb_command()
-                local mason_registry = require('mason-registry')
-                local is_windows = vim.fn.has('win32') == 1
-                
-                -- Try to get Mason-installed codelldb with error handling
-                local success, result = pcall(function()
-                    if mason_registry.is_installed('codelldb') then
-                        local codelldb_package = mason_registry.get_package('codelldb')
-                        if codelldb_package and codelldb_package.get_install_path then
-                            local install_path = codelldb_package:get_install_path()
-                            -- On Windows, the structure is: install_path/extension/adapter/codelldb.exe
-                            if is_windows then
-                                return install_path .. '\\extension\\adapter\\codelldb.exe'
-                            else
-                                return install_path .. '/extension/adapter/codelldb'
-                            end
-                        end
-                    end
-                    return nil
-                end)
-                
-                if success and result then
-                    -- Verify the file exists
-                    if vim.fn.executable(result) == 1 then
-                        return result
-                    end
-                end
-                
-                -- Fallback to system PATH
-                local extension = is_windows and '.exe' or ''
-                return 'codelldb' .. extension
-            end
-            
-            dap.adapters.codelldb = {
-                type = 'server',
-                port = '${port}',
-                executable = {
-                    command = get_codelldb_command(),
-                    args = { '--port', '${port}' },
-                },
-                detached = false,
-            }
+            -- CodeLLDB adapter is now automatically configured by mason-nvim-dap
             -- C/C++ configurations
             dap.configurations.cpp = {
                 {

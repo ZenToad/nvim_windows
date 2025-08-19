@@ -1,20 +1,21 @@
 return {
-    -- Search Tool: Ripgrep
-    {
-        'BurntSushi/ripgrep',
-    },
-    -- Fuzzy Finder: Telescope
+    -- Modern Telescope setup (2025 best practices)
     {
         'nvim-telescope/telescope.nvim',
+        tag = '0.1.8', -- Use specific stable version
         dependencies = { 
             'nvim-lua/plenary.nvim',
-            'nvim-treesitter/nvim-treesitter',
-            'nvim-tree/nvim-web-devicons', 
+            'nvim-tree/nvim-web-devicons',
+            -- Performance optimization
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
         },
-        version = "*",
         config = function()
-            require('telescope').setup{
+            local telescope = require('telescope')
+            
+            -- Enhanced configuration with 2025 optimizations
+            telescope.setup({
                 defaults = {
+                    -- Improved vimgrep_arguments for better search
                     vimgrep_arguments = {
                         'rg',
                         '--color=never',
@@ -22,45 +23,55 @@ return {
                         '--with-filename',
                         '--line-number',
                         '--column',
-                        '--smart-case'
+                        '--smart-case',
+                        '--hidden', -- Search hidden files
+                        '--glob', '!**/.git/*', -- Exclude .git
+                        '--glob', '!**/node_modules/*', -- Exclude node_modules
                     },
-                    prompt_prefix = "> ",
-                    selection_caret = "> ",
-                    path_display = {"truncate"},
-                }
-            }
-            local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<leader>pf', function()
-                builtin.find_files({})
-            end)
-            vim.keymap.set('n', '<C-p>', function()
-                builtin.git_files({recurse_submodules=true})
-            end)
-            vim.keymap.set('n', '<leader>ps', function()
-                builtin.live_grep({})
-            end)
-            vim.keymap.set('n', '<F12>', function()
-                builtin.lsp_definitions({})
-            end)
-            vim.keymap.set('n', '<F11>', function()
-                builtin.lsp_implementations({})
-            end)
-
-        end
-    },
-    -- Telescope ui
-    {
-        'nvim-telescope/telescope-ui-select.nvim',
-        config = function()
-            require("telescope").setup({
+                    prompt_prefix = "🔍 ",
+                    selection_caret = "❯ ",
+                    path_display = { "truncate" },
+                    file_ignore_patterns = { "%.git/", "node_modules/" },
+                    layout_config = {
+                        horizontal = { preview_width = 0.6 },
+                    },
+                },
                 extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    },
                     ["ui-select"] = {
-                        require("telescope.themes").get_dropdown {}
+                        require("telescope.themes").get_dropdown({})
                     }
                 }
             })
-
-            require("telescope").load_extension("ui-select")    
+            
+            -- Load extensions
+            telescope.load_extension('fzf')
+            telescope.load_extension('ui-select')
+            
+            -- Modern 2025 keybindings
+            local builtin = require('telescope.builtin')
+            vim.keymap.set('n', '<leader>ff', builtin.git_files, { desc = "Find git files" })
+            vim.keymap.set('n', '<leader>fa', builtin.find_files, { desc = "Find all files" })
+            vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Live grep" })
+            vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "Find buffers" })
+            vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "Help tags" })
+            
+            -- Keep original keybindings for compatibility
+            vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = "Find files" })
+            vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = "Git files" })
+            vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = "Live grep" })
+            vim.keymap.set('n', '<F12>', builtin.lsp_definitions, { desc = "LSP definitions" })
+            vim.keymap.set('n', '<F11>', builtin.lsp_implementations, { desc = "LSP implementations" })
         end
+    },
+    -- UI Select extension
+    {
+        'nvim-telescope/telescope-ui-select.nvim',
+        dependencies = { 'nvim-telescope/telescope.nvim' },
     },
 }
