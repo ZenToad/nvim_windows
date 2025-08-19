@@ -35,7 +35,7 @@ return {
             -- CodeLLDB adapter for better Rust support (Mason-installed)
             local function get_codelldb_command()
                 local mason_registry = require('mason-registry')
-                local extension = vim.fn.has('win32') == 1 and '.exe' or ''
+                local is_windows = vim.fn.has('win32') == 1
                 
                 -- Try to get Mason-installed codelldb with error handling
                 local success, result = pcall(function()
@@ -43,18 +43,27 @@ return {
                         local codelldb_package = mason_registry.get_package('codelldb')
                         if codelldb_package and codelldb_package.get_install_path then
                             local install_path = codelldb_package:get_install_path()
-                            return install_path .. '/codelldb' .. extension
+                            -- On Windows, the structure is: install_path/extension/adapter/codelldb.exe
+                            if is_windows then
+                                return install_path .. '\\extension\\adapter\\codelldb.exe'
+                            else
+                                return install_path .. '/extension/adapter/codelldb'
+                            end
                         end
                     end
                     return nil
                 end)
                 
                 if success and result then
-                    return result
-                else
-                    -- Fallback to system PATH
-                    return 'codelldb' .. extension
+                    -- Verify the file exists
+                    if vim.fn.executable(result) == 1 then
+                        return result
+                    end
                 end
+                
+                -- Fallback to system PATH
+                local extension = is_windows and '.exe' or ''
+                return 'codelldb' .. extension
             end
             
             dap.adapters.codelldb = {
