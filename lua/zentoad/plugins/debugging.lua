@@ -33,18 +33,27 @@ return {
             }
             
             -- CodeLLDB adapter for better Rust support (Mason-installed)
-            local mason_registry = require('mason-registry')
-            local codelldb_root = mason_registry.get_package('codelldb'):get_install_path()
-            local extension = ""
-            if vim.fn.has('win32') == 1 then
-                extension = ".exe"
+            local function get_codelldb_command()
+                local mason_registry = require('mason-registry')
+                
+                -- Check if codelldb is installed
+                if mason_registry.is_installed('codelldb') then
+                    local codelldb_package = mason_registry.get_package('codelldb')
+                    local install_path = codelldb_package:get_install_path()
+                    local extension = vim.fn.has('win32') == 1 and '.exe' or ''
+                    return install_path .. '/codelldb' .. extension
+                else
+                    -- Fallback to system PATH
+                    local extension = vim.fn.has('win32') == 1 and '.exe' or ''
+                    return 'codelldb' .. extension
+                end
             end
             
             dap.adapters.codelldb = {
                 type = 'server',
                 port = '${port}',
                 executable = {
-                    command = codelldb_root .. '/codelldb' .. extension,
+                    command = get_codelldb_command(),
                     args = { '--port', '${port}' },
                 },
                 detached = false,
