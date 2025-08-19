@@ -5,54 +5,7 @@ return {
         dependencies = { 'williamboman/mason.nvim' },
         config = function()
             require('mason-nvim-dap').setup({
-                ensure_installed = { 'codelldb' },
-                handlers = {
-                    function(config)
-                        require('mason-nvim-dap').default_setup(config)
-                    end,
-                    codelldb = function(config)
-                        -- Get the actual Mason install path for codelldb
-                        local mason_registry = require('mason-registry')
-                        local codelldb_path = "codelldb" -- fallback
-                        
-                        if mason_registry.is_installed('codelldb') then
-                            local install_path = mason_registry.get_package('codelldb'):get_install_path()
-                            print("CodeLLDB install path: " .. install_path)
-                            
-                            if vim.fn.has('win32') == 1 then
-                                -- Try the actual Windows path structure
-                                local possible_paths = {
-                                    install_path .. "\\extension\\adapter\\codelldb.exe",
-                                    install_path .. "\\codelldb.exe",
-                                }
-                                for _, path in ipairs(possible_paths) do
-                                    print("Checking path: " .. path)
-                                    if vim.fn.executable(path) == 1 then
-                                        codelldb_path = path
-                                        print("Found working codelldb at: " .. path)
-                                        break
-                                    end
-                                end
-                            else
-                                codelldb_path = install_path .. "/extension/adapter/codelldb"
-                            end
-                        else
-                            print("CodeLLDB not installed via Mason")
-                        end
-                        
-                        print("Using codelldb command: " .. codelldb_path)
-                        
-                        config.adapters = {
-                            type = "server",
-                            port = "${port}",
-                            executable = {
-                                command = codelldb_path,
-                                args = {"--port", "${port}"}
-                            }
-                        }
-                        require('mason-nvim-dap').default_setup(config)
-                    end
-                }
+                automatic_installation = true,
             })
         end,
     },
