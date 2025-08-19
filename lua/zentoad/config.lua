@@ -107,8 +107,12 @@ vim.keymap.set("", "0", "^")
 -- Exit terminal mode
 vim.keymap.set("t", "ESC", "<C-\\><C-n>")
 
--- Open vimrc directory
-vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERDTreeToggle<CR>")
+-- Open nvim config directory
+vim.keymap.set("n", "<leader>ev", function()
+    vim.cmd("tabnew")
+    vim.cmd("tcd " .. vim.fn.stdpath("config"))
+    vim.cmd("NERDTreeToggle")
+end, { desc = "Edit nvim config" })
 
 -- Build commands
 vim.keymap.set("n", "<leader>m", ':TermExec cmd="build.bat" go_back=0 direction="float"<CR>', { silent = false, noremap = true })

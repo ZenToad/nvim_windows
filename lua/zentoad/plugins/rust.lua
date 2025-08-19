@@ -8,14 +8,7 @@ return {
         -- Simplified config - rustaceanvim works out of the box with minimal setup
         config = function()
             vim.g.rustaceanvim = {
-                -- Configure rustaceanvim to handle its own debugging
-                dap = {
-                    adapter = {
-                        type = 'executable',
-                        command = 'lldb-dap', -- Use system PATH
-                        name = 'lldb',
-                    },
-                },
+                -- Let rustaceanvim use its default DAP configuration
                 server = {
                     on_attach = function(_, bufnr)
                         -- Essential keybindings only

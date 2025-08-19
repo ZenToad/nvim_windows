@@ -55,9 +55,9 @@ return {
         },
       })
 
-      -- 🔹 Explicit OLS setup (NOT via mason)
+      -- Odin Language Server setup
       lspconfig.ols.setup({
-        cmd = { "C:\\dev\\ols\\ols.exe" }, -- absolute path is safest on Windows
+        cmd = { "ols" }, -- Use PATH, or set ODIN_ROOT environment variable
         filetypes = { "odin" },
         root_dir = function(fname)
           return util.root_pattern("ols.json", ".git")(fname) or util.path.dirname(fname)
