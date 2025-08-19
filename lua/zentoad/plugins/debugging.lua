@@ -1,15 +1,5 @@
 return {
-    -- Mason DAP support
-    {
-        'jay-babu/mason-nvim-dap.nvim',
-        dependencies = { 'williamboman/mason.nvim' },
-        config = function()
-            require('mason-nvim-dap').setup({
-                automatic_installation = true,
-            })
-        end,
-    },
-    -- nvim-dap
+    -- nvim-dap (using system LLDB, no Mason dependency needed)
     {
         'mfussenegger/nvim-dap',
         dependencies = {
@@ -24,14 +14,22 @@ return {
 
             dap.set_log_level('TRACE')
     --
-            -- LLDB adapter for C/C++ 
+            -- Use system LLDB for both C/C++ and Rust (more reliable on Windows)
             dap.adapters.lldb = {
                 type = 'executable',
                 command = 'C:\\Program Files\\LLVM\\bin\\lldb-dap.exe',
                 name = 'lldb'
             }
             
-            -- CodeLLDB adapter is now automatically configured by mason-nvim-dap
+            -- Use reliable system LLDB for Rust debugging (same as C/C++)
+            dap.adapters.codelldb = {
+                type = 'server',
+                port = '${port}',
+                executable = {
+                    command = 'C:\\Program Files\\LLVM\\bin\\lldb-dap.exe',
+                    args = { '--port', '${port}' },
+                },
+            }
             -- C/C++ configurations
             dap.configurations.cpp = {
                 {
