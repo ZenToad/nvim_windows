@@ -35,16 +35,24 @@ return {
             -- CodeLLDB adapter for better Rust support (Mason-installed)
             local function get_codelldb_command()
                 local mason_registry = require('mason-registry')
+                local extension = vim.fn.has('win32') == 1 and '.exe' or ''
                 
-                -- Check if codelldb is installed
-                if mason_registry.is_installed('codelldb') then
-                    local codelldb_package = mason_registry.get_package('codelldb')
-                    local install_path = codelldb_package:get_install_path()
-                    local extension = vim.fn.has('win32') == 1 and '.exe' or ''
-                    return install_path .. '/codelldb' .. extension
+                -- Try to get Mason-installed codelldb with error handling
+                local success, result = pcall(function()
+                    if mason_registry.is_installed('codelldb') then
+                        local codelldb_package = mason_registry.get_package('codelldb')
+                        if codelldb_package and codelldb_package.get_install_path then
+                            local install_path = codelldb_package:get_install_path()
+                            return install_path .. '/codelldb' .. extension
+                        end
+                    end
+                    return nil
+                end)
+                
+                if success and result then
+                    return result
                 else
                     -- Fallback to system PATH
-                    local extension = vim.fn.has('win32') == 1 and '.exe' or ''
                     return 'codelldb' .. extension
                 end
             end
