@@ -12,7 +12,7 @@ return {
                 dap = {
                     adapter = {
                         type = 'executable',
-                        command = 'C:\\Program Files\\LLVM\\bin\\lldb-dap.exe',
+                        command = 'lldb-dap', -- Use system PATH
                         name = 'lldb',
                     },
                 },
