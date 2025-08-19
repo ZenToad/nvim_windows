@@ -40,7 +40,7 @@ return {
       -- mason for other servers (clangd, etc.)
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = {},
+        ensure_installed = { 'rust_analyzer' },
         handlers = {
           function(server) lspconfig[server].setup({}) end,
           clangd = function()
@@ -49,6 +49,29 @@ return {
               root_dir = function(fname)
                 return util.root_pattern("compile_commands.json", ".git")(fname)
               end,
+            })
+          end,
+          rust_analyzer = function()
+            lspconfig.rust_analyzer.setup({
+              settings = {
+                ['rust-analyzer'] = {
+                  cargo = {
+                    allFeatures = true,
+                  },
+                  checkOnSave = {
+                    command = "cargo",
+                    args = { "check" },
+                  },
+                  procMacro = {
+                    enable = true,
+                  },
+                  inlayHints = {
+                    enable = true,
+                    parameterHints = { enable = true },
+                    typeHints = { enable = true },
+                  },
+                },
+              },
             })
           end,
         },

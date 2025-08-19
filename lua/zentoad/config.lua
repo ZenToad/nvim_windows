@@ -110,9 +110,18 @@ vim.keymap.set("t", "ESC", "<C-\\><C-n>")
 -- Open vimrc directory
 vim.keymap.set("n", "<leader>ev", ":tabnew<CR>:tcd ~/AppData/Local/nvim<CR>:NERDTreeToggle<CR>")
 
--- Build command
+-- Build commands
 vim.keymap.set("n", "<leader>m", ':TermExec cmd="build.bat" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
 vim.keymap.set("n", "<F5>", ':TermExec cmd="build_hot_reload.bat run" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
+
+-- Rust-specific build commands (global, available in any buffer)
+vim.keymap.set("n", "<leader>rcc", ':TermExec cmd="cargo check" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo check" })
+vim.keymap.set("n", "<leader>rcb", ':TermExec cmd="cargo build" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo build" })
+vim.keymap.set("n", "<leader>rcr", ':TermExec cmd="cargo run" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo run" })
+vim.keymap.set("n", "<leader>rct", ':TermExec cmd="cargo test" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo test" })
+vim.keymap.set("n", "<leader>rcf", ':TermExec cmd="cargo fmt" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo format" })
+vim.keymap.set("n", "<leader>rcl", ':TermExec cmd="cargo clippy" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo clippy" })
+vim.keymap.set("n", "<leader>rcd", ':TermExec cmd="cargo doc --open" go_back=0 direction="float"<CR>', { silent = false, noremap = true, desc = "Cargo doc" })
 
 -- source init.lua
 vim.keymap.set("n", "<leader>af", ":source ./init.lua<CR>", { silent=false, noremap=true})
