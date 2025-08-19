@@ -108,10 +108,21 @@ The configuration expects Mononoki Nerd Font. After font changes, the nvim-data 
 - Undo directory set to `~/.vim/undodir`
 
 ## Rust Development Workflow
-1. **Setup**: Ensure rust-analyzer is installed via Mason (`:Mason`)
+1. **Setup**: 
+   - Ensure rust-analyzer is installed via Mason (`:Mason`)
+   - CodeLLDB debugger will be automatically installed via mason-nvim-dap
+   - If debugging doesn't work, manually install: `:MasonInstall codelldb`
 2. **Project**: Navigate to Rust project root (Cargo.toml should be present)
 3. **Development**: Use `<leader>rcc` for quick checks, `<leader>rcr` to run
 4. **Testing**: Use `<leader>rct` for cargo test, `<leader>rt` for individual test selection
-5. **Debugging**: Use `<leader>rd` to show debug targets, then `<F6>` to start debugging
+5. **Debugging**: 
+   - Use `<leader>rd` to show debug targets, then `<F6>` to start debugging
+   - CodeLLDB will be automatically located via Mason installation
+   - Supports both direct executable and cargo-based debugging
 6. **Dependencies**: In Cargo.toml, use crates.nvim commands (`<leader>cv`, `<leader>cu`) to manage dependencies
 7. **Formatting**: `<leader>rcf` runs cargo fmt, or enable format-on-save via LSP
+
+## Troubleshooting
+- **"codelldb not found"**: Run `:MasonInstall codelldb` to manually install the debugger
+- **Debug adapter issues**: Check `:Mason` to ensure codelldb is installed and up to date
+- **Rust-analyzer not working**: Verify installation with `:Mason` and restart Neovim

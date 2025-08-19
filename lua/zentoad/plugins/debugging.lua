@@ -1,4 +1,15 @@
 return {
+    -- Mason DAP support
+    {
+        'jay-babu/mason-nvim-dap.nvim',
+        dependencies = { 'williamboman/mason.nvim' },
+        config = function()
+            require('mason-nvim-dap').setup({
+                ensure_installed = { 'codelldb' },
+                automatic_installation = true,
+            })
+        end,
+    },
     -- nvim-dap
     {
         'mfussenegger/nvim-dap',
@@ -6,6 +17,7 @@ return {
             'rcarriga/nvim-dap-ui',
             'theHamsta/nvim-dap-virtual-text',
             'nvim-neotest/nvim-nio',  -- Ensure nvim-nio is installed
+            'jay-babu/mason-nvim-dap.nvim',
         },
         config = function()
             local dap = require('dap')
@@ -20,14 +32,22 @@ return {
                 name = 'lldb'
             }
             
-            -- CodeLLDB adapter for better Rust support
+            -- CodeLLDB adapter for better Rust support (Mason-installed)
+            local mason_registry = require('mason-registry')
+            local codelldb_root = mason_registry.get_package('codelldb'):get_install_path()
+            local extension = ""
+            if vim.fn.has('win32') == 1 then
+                extension = ".exe"
+            end
+            
             dap.adapters.codelldb = {
                 type = 'server',
                 port = '${port}',
                 executable = {
-                    command = 'codelldb',
+                    command = codelldb_root .. '/codelldb' .. extension,
                     args = { '--port', '${port}' },
-                }
+                },
+                detached = false,
             }
             -- C/C++ configurations
             dap.configurations.cpp = {
