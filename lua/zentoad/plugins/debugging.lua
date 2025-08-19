@@ -1,21 +1,15 @@
 return {
-    -- Clean DAP setup for C/C++ and Odin (Rust handled by rustaceanvim)
+    -- Minimal DAP setup for C/C++ and Odin only (Rust handled by rustaceanvim)
     {
         'mfussenegger/nvim-dap',
         dependencies = {
             'rcarriga/nvim-dap-ui',
             'theHamsta/nvim-dap-virtual-text',
             'nvim-neotest/nvim-nio',
-            'jay-babu/mason-nvim-dap.nvim',
         },
         config = function()
             local dap = require('dap')
             local dapui = require('dapui')
-
-            -- Let mason-nvim-dap handle adapter installation and basic setup
-            require('mason-nvim-dap').setup({
-                automatic_installation = true,
-            })
 
             -- Basic C/C++ configuration for your existing LLVM setup
             dap.configurations.cpp = {
