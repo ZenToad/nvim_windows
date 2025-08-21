@@ -2,7 +2,7 @@ return {
     -- Modern Rust support - complete zero-config solution
     {
         'mrcjkb/rustaceanvim',
-        version = '^5',
+        version = '^6', -- Use latest recommended version
         lazy = false,
         ft = { 'rust' },
     },
