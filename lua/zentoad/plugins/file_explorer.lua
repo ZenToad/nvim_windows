@@ -6,21 +6,43 @@ return {
 		    require('nvim-web-devicons').setup({ default = true })
 		end
 	},
-	-- File Explorer: NERDTree (keeping for compatibility)
+	-- File Explorer: nvim-tree
 	{
-		"preservim/nerdtree",
-		dependencies = { 
-			'nvim-tree/nvim-web-devicons',
-			'ryanoasis/vim-devicons' -- NERDTree icon support
-		},
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { 'nvim-tree/nvim-web-devicons' },
 		config = function()
-			-- NERDTree keybindings (moved from config.lua for better organization)
-			vim.keymap.set("n", "<C-k><C-b>", vim.cmd.NERDTreeToggle, { desc = "Toggle NERDTree" })
-			vim.keymap.set("i", "<C-k><C-b>", vim.cmd.NERDTreeToggle, { desc = "Toggle NERDTree" })
+			-- Disable netrw (required for nvim-tree)
+			vim.g.loaded_netrw = 1
+			vim.g.loaded_netrwPlugin = 1
 			
-			-- NERDTree settings
-			vim.g.NERDTreeShowHidden = 1 -- Show hidden files
-			vim.g.NERDTreeIgnore = {'\\.git$', 'node_modules', '\\.DS_Store'} -- Ignore patterns
+			require('nvim-tree').setup({
+				view = {
+					width = 30,
+				},
+				renderer = {
+					group_empty = true,
+					icons = {
+						show = {
+							file = true,
+							folder = true,
+							folder_arrow = true,
+							git = true,
+						},
+					},
+				},
+				filters = {
+					dotfiles = false, -- Show hidden files
+					custom = { '.git', 'node_modules', '.DS_Store' }, -- Ignore patterns
+				},
+				git = {
+					enable = true,
+					ignore = false,
+				},
+			})
+			
+			-- nvim-tree keybindings
+			vim.keymap.set("n", "<C-k><C-b>", vim.cmd.NvimTreeToggle, { desc = "Toggle nvim-tree" })
+			vim.keymap.set("i", "<C-k><C-b>", vim.cmd.NvimTreeToggle, { desc = "Toggle nvim-tree" })
 		end,
 	},
 }

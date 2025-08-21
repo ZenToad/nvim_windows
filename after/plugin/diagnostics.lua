@@ -1,4 +1,4 @@
--- ===== Odin / LSP diagnostics UX =====
+-- ===== LSP diagnostics UX =====
 
 -- 1) Clear, consistent visuals
 vim.o.signcolumn = "yes"

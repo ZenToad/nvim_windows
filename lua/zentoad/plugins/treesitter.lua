@@ -4,13 +4,10 @@ return {
         build = ':TSUpdate',
         config = function()
             require('nvim-treesitter.configs').setup {
-                -- Essential parsers for multi-language development (2025)
+                -- Rust-only development parsers
                 ensure_installed = {
-                    'c', 'cpp', 'lua', 'vim', 'vimdoc', 'query', 
-                    'rust', 'toml', -- Rust support
-                    'markdown', 'markdown_inline', -- Documentation
-                    'json', 'yaml', -- Config files
-                    'bash', 'python', -- Common scripting
+                    'rust', 'toml', -- Rust and Cargo.toml support
+                    'lua', 'vim', 'vimdoc', -- Neovim config files
                 },
 
                 -- Auto-install missing parsers (2025 recommendation: true for better UX)

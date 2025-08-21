@@ -54,25 +54,9 @@
             vim.g.NERDAltDelims_c = 1
         end,
     },
-    -- Manage ctags
-    {
-        "ludovicchabant/vim-gutentags",
-        config = function()
-            vim.g.gutentags_project_root = { '.git', '.hg', '.svn' }
-            vim.g.gutentags_ctags_executable = 'ctags'
-            vim.g.gutentags_generate_on_write = 1
-            vim.g.gutentags_generate_on_missing = 1
-        end
-    },    -- Motion: Easymotion
+    -- Motion: Easymotion
     {
         'easymotion/vim-easymotion',
-    },
-    -- Tagbar: Tagbar
-    {
-        'preservim/tagbar',
-        config = function()
-            vim.keymap.set('n', '<F9>', ':TagbarOpen fj<CR>', {silent = true})
-        end
     },
     -- Autocomplete Brackets: DelimitMate
     {

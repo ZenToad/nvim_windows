@@ -1,9 +1,6 @@
 -- Cursor settings
 vim.opt.guicursor = ""
 
--- Disable netrw (default file explorer)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 -- Line numbers
 vim.opt.nu = true
@@ -58,15 +55,10 @@ vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("n", "q;", "q:", { noremap = true })
 vim.keymap.set("n", "<SPACE>", "o<ESC>", { silent = true, noremap = true })
 
--- Tagbar
-vim.keymap.set("n", "<F9>", ":TagbarOpen fj<CR>", { silent = true })
 
 -- Toggle word wrap
 vim.keymap.set("n", "<leader>w", ":set nowrap!<CR>", { silent = true, noremap = true })
 
--- NERDTree
-vim.keymap.set("n", "<C-k><C-b>", vim.cmd.NERDTreeToggle)
-vim.keymap.set("i", "<C-k><C-b>", vim.cmd.NERDTreeToggle)
 
 -- Turn search highlight off
 vim.keymap.set("n", "<leader>/", vim.cmd.nohl, { noremap = true })
@@ -111,12 +103,11 @@ vim.keymap.set("t", "ESC", "<C-\\><C-n>")
 vim.keymap.set("n", "<leader>ev", function()
     vim.cmd("tabnew")
     vim.cmd("tcd " .. vim.fn.stdpath("config"))
-    vim.cmd("NERDTreeToggle")
+    vim.cmd("NvimTreeToggle")
 end, { desc = "Edit nvim config" })
 
--- Build commands
-vim.keymap.set("n", "<leader>m", ':TermExec cmd="build.bat" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
-vim.keymap.set("n", "<F5>", ':TermExec cmd="build_hot_reload.bat run" go_back=0 direction="float"<CR>', { silent = false, noremap = true })
+-- Rust build commands only
+-- Removed non-Rust build.bat and build_hot_reload.bat commands
 
 -- source init.lua
 vim.keymap.set("n", "<leader>af", ":source ./init.lua<CR>", { silent=false, noremap=true})

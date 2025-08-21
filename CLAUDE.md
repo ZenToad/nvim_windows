@@ -40,7 +40,7 @@ This is a Neovim configuration optimized for Windows development, supporting Rus
 
 ### Configuration Management
 - `<leader>af` or `:source ./init.lua` - Reload the Neovim configuration
-- `<leader>ev` - Open vimrc directory in a new tab with NERDTree
+- `<leader>ev` - Open vimrc directory in a new tab with nvim-tree
 
 ### Plugin Management
 Plugin installation and updates are handled automatically by Lazy.nvim. The lock file is `lazy-lock.json`.
@@ -58,7 +58,7 @@ Plugins are organized in `lua/zentoad/plugins/` with each file handling specific
 - `lsp.lua` - LSP configuration with Mason, rust-analyzer, clangd, and Odin Language Server (OLS)
 - `rust.lua` - Comprehensive Rust development tools (rustaceanvim, crates.nvim)
 - `telescope.lua` - Fuzzy finder and search tools using ripgrep
-- `file_explorer.lua` - NERDTree file browser with devicons
+- `file_explorer.lua` - nvim-tree file browser with devicons
 - `terminal.lua` - ToggleTerm for integrated terminal functionality
 - `colorscheme.lua` - Kanagawa color scheme
 - `treesitter.lua` - Syntax highlighting and parsing
@@ -83,7 +83,7 @@ Plugins are organized in `lua/zentoad/plugins/` with each file handling specific
 - Line movement with `<A-j>` and `<A-k>`
 
 #### File Management
-- Uses NERDTree (`<C-k><C-b>`) for file exploration
+- Uses nvim-tree (`<C-k><C-b>`) for file exploration
 - Telescope for fuzzy finding files (`<leader>pf`, `<C-p>` for git files)
 - Live grep search with `<leader>ps`
 
