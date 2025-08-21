@@ -64,6 +64,50 @@ Plugin installation and updates are handled automatically by Lazy.nvim. The lock
 - Icons provided by nvim-web-devicons
 - 30 character width sidebar
 
+## Flash.nvim Motion Navigation
+
+### Basic Navigation
+- `s` - **Flash jump** - Main motion command for jumping anywhere
+- `<leader>s` (`,s`) - **Flash Treesitter** - Jump to code structures (functions, classes, etc.)
+
+### How Flash Works
+Flash.nvim revolutionizes motion by providing intelligent, adaptive labeling:
+
+1. **Start typing**: Press `s` and begin typing the target text
+2. **Dynamic labels**: Labels appear and adapt as you type more characters
+3. **Smart targeting**: The more you type, the fewer labels needed
+4. **Instant jump**: When target is unique enough, jump happens automatically
+
+### Advanced Features
+- `r` (operator-pending) - **Remote Flash** - Use flash motions with operators (like `dr` to delete to flash target)
+- `R` (visual/operator-pending) - **Treesitter Search** - Search within code structures
+- `<C-s>` (command mode) - **Toggle Flash Search** - Enhance `/` search with flash labels
+
+### Flash vs Traditional EasyMotion
+**Traditional EasyMotion workflow:**
+1. Press `<leader><leader>w` 
+2. See all possible targets labeled
+3. Press the label character
+
+**Flash.nvim workflow:**
+1. Press `s`
+2. Start typing target text naturally
+3. Labels appear only when needed
+4. Jump when target becomes clear
+
+### Configuration Features
+- **Multi-window support**: Jump across different windows seamlessly
+- **Treesitter integration**: `<leader>s` understands code structure
+- **Search enhancement**: Works with Neovim's native search (`/`)
+- **Smart labeling**: Uses `asdfghjklqwertyuiopzxcvbnm` for easy typing
+- **Backdrop highlighting**: Dims non-target text for better focus
+
+### Tips for Maximum Speed
+- **Type more characters**: Don't stop at 1-2 chars, keep typing until labels are minimal
+- **Use Treesitter mode**: `<leader>s` for jumping to functions, classes, variables
+- **Combine with operators**: `ds` (delete to flash target), `cs` (change to flash target)
+- **Cross-window navigation**: Flash works across multiple windows automatically
+
 ## Architecture
 
 ### Entry Points
