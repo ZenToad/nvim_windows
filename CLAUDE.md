@@ -22,17 +22,22 @@ Plugin installation and updates are handled automatically by Lazy.nvim. The lock
 - `<leader>ev` - Open nvim-tree in config directory (new tab)
 
 ### File Operations (within nvim-tree)
-- `<CR>` or `o` - Open file/folder
+- `<CR>`, `o`, or `l` - Open file/folder
 - `<C-v>` - Open file in vertical split
 - `<C-x>` - Open file in horizontal split
 - `<C-t>` - Open file in new tab
+- `<C-e>` - Open file in place (replace tree buffer)
+- `s` - Open file with system default application
 - `P` - Go to parent directory
-- `<BS>` or `<C-]>` - Close directory node
+- `<BS>` - Close directory node
+- `<C-]>` - **Change working directory** to directory under cursor
+- `-` - Navigate up to parent directory (can go beyond workspace root)
 
 ### File Management
 - `a` - Create new file/directory (add `/` for directory)
 - `d` - Delete file/directory
-- `r` - Rename file/directory
+- `r` - Rename file/directory (keep original name as starting point)
+- `<C-r>` - Rename file/directory (clear original name)
 - `c` - Copy file/directory
 - `x` - Cut file/directory
 - `p` - Paste file/directory
@@ -40,13 +45,18 @@ Plugin installation and updates are handled automatically by Lazy.nvim. The lock
 - `Y` - Copy relative path to clipboard
 - `gy` - Copy absolute path to clipboard
 
-### View Options
+### Tree Navigation & Management
 - `H` - Toggle hidden files (dotfiles)
-- `R` - Refresh tree
-- `W` - Collapse all folders
-- `E` - Expand all folders
+- `R` - Refresh tree (reread filesystem)
+- `W` - Collapse all open folders
+- `E` - Expand entire tree from root
+- `>` and `<` - Navigate up/down tree to next sibling
 - `<C-k>` - Show file info
 - `g?` - Show help/keybindings
+
+### Window Management
+- `<C-w>` followed by direction - Move between nvim-tree and editor windows
+- Focus automatically shifts when opening files
 
 ### Git Integration
 - Files show git status with icons:
