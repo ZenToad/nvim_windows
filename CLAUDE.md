@@ -118,6 +118,75 @@ Flash.nvim revolutionizes motion by providing intelligent, adaptive labeling:
 - **Combine with operators**: `ds` (delete to flash target), `cs` (change to flash target)
 - **Cross-window navigation**: Flash works across multiple windows automatically
 
+## Comment.nvim Code Commenting
+
+### Basic Commenting
+- `gcc` - **Toggle line comment** for current line
+- `gbc` - **Toggle block comment** for current line
+- `gc` (Visual mode) - **Comment selected lines**
+- `gb` (Visual mode) - **Block comment selection**
+
+### Motion-Based Commenting
+Comment.nvim follows Vim's operator-pending pattern, allowing you to comment with any motion:
+
+- `gc{motion}` - **Line comment with motion**:
+  - `gcip` - Comment inside paragraph
+  - `gc4j` - Comment current line + 4 lines down
+  - `gc}` - Comment to next paragraph
+  - `gci{` - Comment inside braces `{}`
+  - `gcap` - Comment around paragraph
+
+- `gb{motion}` - **Block comment with motion**:
+  - `gbip` - Block comment inside paragraph
+  - `gb4j` - Block comment 4 lines down
+
+### Extra Commenting Features
+- `gcO` - **Add comment above** current line (and enter insert mode)
+- `gco` - **Add comment below** current line (and enter insert mode)
+- `gcA` - **Add comment at end** of current line (and enter insert mode)
+
+### Modern Community Standard: `gc` Prefix
+
+Comment.nvim uses the `gc` prefix, which has become the **standard across the Neovim community**:
+
+**Why `gc` is the modern standard:**
+- **Mnemonic**: "Go Comment" - intuitive and memorable
+- **Tim Pope's influence**: Popularized by vim-commentary (highly respected developer)
+- **Vim grammar**: Follows Vim's operator pattern like `gd` (go to definition), `gf` (go to file)
+- **Text object compatibility**: Works with Vim motions (`gcip`, `gci{`, `gcap`)
+- **Community consensus**: Used by major plugins (Comment.nvim, vim-commentary, mini.comment)
+
+**Modern Neovim prefix standards:**
+- `gc` - Commenting operations
+- `gs` - Surround operations (nvim-surround)
+- `gh` - Git hunks (gitsigns.nvim)
+- `gl` - LSP/diagnostics operations
+
+### Advanced Features
+- **Context-aware commenting**: Treesitter integration for mixed languages (JSX, Vue, etc.)
+- **Language detection**: Automatically uses correct comment syntax for file type
+- **Padding**: Adds space between comment delimiter and text
+- **Sticky cursor**: Cursor stays in position after commenting
+- **Lazy loading**: Only loads when opening files for better startup performance
+
+### Comment.nvim vs NERDCommenter
+
+**Traditional NERDCommenter:**
+- `<leader>cc` - Comment line
+- `<leader>cu` - Uncomment line
+- `<leader>c<space>` - Toggle comment
+
+**Modern Comment.nvim:**
+- `gcc` - Toggle line comment
+- `gc{motion}` - Comment with any motion
+- Follows community standards and Vim grammar
+
+### Tips for Efficient Commenting
+- **Use with text objects**: `gcip` (comment paragraph), `gci{` (comment inside braces)
+- **Count with motions**: `gc4j` comments 4 lines down from current
+- **Visual selection**: Select text, then `gc` to comment the selection
+- **Quick line additions**: `gcO` to add comment above, `gco` below
+
 ## Architecture
 
 ### Entry Points

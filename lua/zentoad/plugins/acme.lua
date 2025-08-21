@@ -42,16 +42,49 @@
 
         end
     },
-    -- Commenting: Nerdcommenter
+    -- Commenting: Comment.nvim (modern replacement for nerdcommenter)
     {
-        'preservim/nerdcommenter',
+        'numToStr/Comment.nvim',
+        event = { "BufReadPre", "BufNewFile" },
+        dependencies = {
+            "JoosepAlviste/nvim-ts-context-commentstring", -- For React/Vue/etc context-aware commenting
+        },
         config = function()
-            -- vim.g.NERDSpaceDelims = 1
-            vim.g.NERDDefaultAlign = 'left'
-            vim.g.NERDCommentEmptyLines = 1
-            vim.g.NERDTrimTrailingWhitespace = 1
-            vim.g.NERDToggleCheckAllLines = 1
-            vim.g.NERDAltDelims_c = 1
+            local comment = require('Comment')
+            
+            comment.setup({
+                -- Add a space b/w comment and the line
+                padding = true,
+                -- Whether the cursor should stay at its position
+                sticky = true,
+                -- Lines to be ignored while (un)comment
+                ignore = nil,
+                -- LHS of toggle mappings in NORMAL mode
+                toggler = {
+                    line = 'gcc',      -- Line-comment toggle keymap
+                    block = 'gbc',     -- Block-comment toggle keymap
+                },
+                -- LHS of operator-pending mappings in NORMAL and VISUAL mode
+                opleader = {
+                    line = 'gc',       -- Line-comment keymap
+                    block = 'gb',      -- Block-comment keymap
+                },
+                -- LHS of extra mappings
+                extra = {
+                    above = 'gcO',     -- Add comment on the line above
+                    below = 'gco',     -- Add comment on the line below
+                    eol = 'gcA',       -- Add comment at the end of line
+                },
+                -- Enable keybindings
+                mappings = {
+                    basic = true,      -- Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
+                    extra = true,      -- Extra mapping; `gco`, `gcO`, `gcA`
+                },
+                -- Function to call before (un)comment
+                pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+                -- Function to call after (un)comment
+                post_hook = nil,
+            })
         end,
     },
     -- Motion: Flash.nvim (modern EasyMotion replacement)
