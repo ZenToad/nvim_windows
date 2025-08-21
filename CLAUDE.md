@@ -373,8 +373,8 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
 
 | Feature | Keybinding | Command | Description |
 |---------|------------|---------|-------------|
-| **Show Debug Targets** | - | `:RustLsp runnables` | List available debug targets |
-| **Start Debugging** | - | `:RustLsp debug` | Start debugging current target |
+| **Show Debug Targets** | `<leader>rr` | `:RustLsp runnables` | List available debug targets |
+| **Start Debugging** | `<leader>rd` | `:RustLsp debug` | Start debugging current target |
 | **Toggle Breakpoint** | `<F9>` or `<leader>db` | `:lua require('dap').toggle_breakpoint()` | Set/remove breakpoint on current line |
 | **Continue** | `<F5>` or `<leader>dc` | `:lua require('dap').continue()` | Continue execution |
 | **Step Over** | `<F10>` | `:lua require('dap').step_over()` | Step over current line |
@@ -399,8 +399,8 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
    ```
 
 2. **Start debugging:**
-   - Run `:RustLsp runnables` to see available targets
-   - Select a debug target or run `:RustLsp debug`
+   - Run `<leader>rr` (`,rr`) to see available targets
+   - Start debugging with `<leader>rd` (`,rd`)
    - Set breakpoint: `<F9>` or `<leader>db`
    - Debug should start and pause at breakpoint
 
@@ -431,6 +431,12 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
 #### Keybinding Setup
 
 This configuration includes standard IDE-style debugging keybindings:
+
+**Rust-specific commands:**
+- **`,rr` (`<leader>rr`)**: Show debug targets/runnables
+- **`,rd` (`<leader>rd`)**: Start debugging
+
+**Standard debugging keys:**
 - **F5**: Continue/Start debugging
 - **F9**: Toggle breakpoint  
 - **F10**: Step over
@@ -438,7 +444,13 @@ This configuration includes standard IDE-style debugging keybindings:
 - **F12**: Step out
 - **Shift-F5**: Terminate debugging
 
-Alternative leader key mappings are also available (`<leader>db`, `<leader>dc`, `<leader>dr`).
+**Variable inspection:**
+- **`,dh` (`<leader>dh`)**: Hover variable under cursor
+- **`,ds` (`<leader>ds`)**: View scopes sidebar
+- **`,df` (`<leader>df`)**: View callstack sidebar
+- **`,dr` (`<leader>dr`)**: Open debug REPL
+
+**Workflow**: Use `,rd` to start debugging, then F-keys for stepping.
 
 ### Troubleshooting
 
