@@ -190,6 +190,103 @@ Comment.nvim uses the `gc` prefix, which has become the **standard across the Ne
 - **Visual selection**: Select text, then `gc` to comment the selection
 - **Quick line additions**: `gcO` to add comment above, `gco` below
 
+## nvim-surround Text Object Manipulation
+
+### Why nvim-surround is Better Than vim-surround
+nvim-surround is a complete rewrite that addresses the main complaint about vim-surround: **hard to remember commands**. Key improvements:
+- **Visual feedback**: 2-second highlighting shows what's being surrounded
+- **Better mnemonics**: "You Surround", "Delete Surround", "Change Surround"
+- **Error handling**: Clear feedback when operations fail
+- **Custom surrounds**: Easy to add new surround patterns
+- **Modern Lua implementation**: Better Neovim integration
+
+### Basic Operations (Easy to Remember!)
+
+#### Adding Surrounds
+**Mnemonic: "You Surround"**
+- `ys{motion}{char}` - **Add surround** with motion + character
+  - `ysiw"` - Surround **i**nside **w**ord with **"** quotes → `"word"`
+  - `ysiw)` - Surround **i**nside **w**ord with **)** parens → `(word)`
+  - `ysip}` - Surround **i**nside **p**aragraph with **}** braces → `{paragraph}`
+  - `yss"` - Surround entire **s**entence/line with **"** quotes
+
+#### Visual Mode Surround (Super Easy!)
+- **Select text, then `S{char}`** - **S**urround selection
+  - Select text → `S"` - Wrap with quotes
+  - Select text → `S)` - Wrap with parentheses
+  - Select text → `S}` - Wrap with braces
+  - Select text → `S<p>` - Wrap with HTML tag
+
+#### Deleting Surrounds
+**Mnemonic: "Delete Surround"**
+- `ds{char}` - **Delete surround** character
+  - `ds"` - Delete quotes: `"hello"` → `hello`
+  - `ds)` - Delete parentheses: `(word)` → `word`
+  - `ds}` - Delete braces: `{text}` → `text`
+  - `dst` - Delete HTML tag: `<p>text</p>` → `text`
+
+#### Changing Surrounds
+**Mnemonic: "Change Surround"**
+- `cs{old}{new}` - **Change surround** from old to new
+  - `cs"'` - Change quotes: `"hello"` → `'hello'`
+  - `cs)]` - Change parens to brackets: `(word)` → `[word]`
+  - `cs}]` - Change braces to brackets: `{text}` → `[text]`
+  - `cs<p><div>` - Change HTML tags: `<p>text</p>` → `<div>text</div>`
+
+### Advanced Features
+
+#### Smart Bracket Handling
+- `(` - Adds spaces: `ysiw(` → `( word )`
+- `)` - No spaces: `ysiw)` → `(word)`
+- `{` - Adds spaces: `ysiw{` → `{ word }`
+- `}` - No spaces: `ysiw}` → `{word}`
+
+#### Custom Function Surround
+- `ysf` - **Function surround** (custom feature!)
+  - Prompts: "Enter the function name: "
+  - Input `console.log` → wraps with `console.log(text)`
+  - `dsf` - Delete function call
+  - `csf` - Change function name
+
+#### Text Objects Integration
+Works with all Vim text objects:
+- `ysi"'` - Change inside quotes: `"hello"` → `'hello'`
+- `ysa"'` - Change around quotes (same effect)
+- `ysi{]` - Change inside braces to brackets
+- `ysip"` - Surround paragraph with quotes
+
+### Common Surround Characters
+- `"` `'` `` ` `` - Quote marks
+- `(` `)` - Parentheses (with/without spaces)
+- `[` `]` - Square brackets
+- `{` `}` - Curly braces
+- `<` `>` - Angle brackets
+- `t` - HTML/XML tags (prompts for tag name)
+- `f` - Function calls (custom - prompts for function name)
+
+### Learning Tips
+1. **Start simple**: Practice `ysiw"` (surround word with quotes)
+2. **Use visual mode**: Select text, then `S"` - very intuitive
+3. **Watch the highlights**: 2-second visual feedback helps you learn
+4. **Remember mnemonics**: "You Surround", "Delete Surround", "Change Surround"
+5. **Practice common patterns**: `cs"'` (change quotes), `ds)` (delete parens)
+
+### Practical Examples
+```
+Original: hello world
+ysiw"    → "hello" world    (surround word with quotes)
+yss)     → (hello world)     (surround line with parens)
+
+Original: "hello world"
+ds"      → hello world       (delete quotes)
+cs"'     → 'hello world'     (change double to single quotes)
+
+Original: (hello)
+cs)]     → [hello]           (change parens to brackets)
+```
+
+The visual highlighting makes learning much easier - you'll see exactly what nvim-surround is doing!
+
 ## Architecture
 
 ### Entry Points
