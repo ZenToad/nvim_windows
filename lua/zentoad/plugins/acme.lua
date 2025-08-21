@@ -45,14 +45,16 @@
     -- Commenting: Comment.nvim (modern replacement for nerdcommenter)
     {
         'numToStr/Comment.nvim',
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = {
-            "JoosepAlviste/nvim-ts-context-commentstring", -- For React/Vue/etc context-aware commenting
+        keys = {
+            { "gcc", mode = "n", desc = "Comment toggle current line" },
+            { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
+            { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
+            { "gbc", mode = "n", desc = "Comment toggle current block" },
+            { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
+            { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
         },
         config = function()
-            local comment = require('Comment')
-            
-            comment.setup({
+            require('Comment').setup({
                 -- Add a space b/w comment and the line
                 padding = true,
                 -- Whether the cursor should stay at its position
@@ -77,13 +79,9 @@
                 },
                 -- Enable keybindings
                 mappings = {
-                    basic = true,      -- Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
-                    extra = true,      -- Extra mapping; `gco`, `gcO`, `gcA`
+                    basic = true,      -- Operator-pending mapping
+                    extra = true,      -- Extra mapping
                 },
-                -- Function to call before (un)comment
-                pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-                -- Function to call after (un)comment
-                post_hook = nil,
             })
         end,
     },

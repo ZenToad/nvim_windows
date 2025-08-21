@@ -122,9 +122,9 @@ Flash.nvim revolutionizes motion by providing intelligent, adaptive labeling:
 
 ### Basic Commenting
 - `gcc` - **Toggle line comment** for current line
-- `gbc` - **Toggle block comment** for current line
 - `gc` (Visual mode) - **Comment selected lines**
-- `gb` (Visual mode) - **Block comment selection**
+- `gbc` - **Toggle block comment** for current line (language dependent)
+- `gb` (Visual mode) - **Block comment selection** (language dependent)
 
 ### Motion-Based Commenting
 Comment.nvim follows Vim's operator-pending pattern, allowing you to comment with any motion:
@@ -136,14 +136,17 @@ Comment.nvim follows Vim's operator-pending pattern, allowing you to comment wit
   - `gci{` - Comment inside braces `{}`
   - `gcap` - Comment around paragraph
 
-- `gb{motion}` - **Block comment with motion**:
+- `gb{motion}` - **Block comment with motion** (when supported by language):
   - `gbip` - Block comment inside paragraph
   - `gb4j` - Block comment 4 lines down
 
-### Extra Commenting Features
-- `gcO` - **Add comment above** current line (and enter insert mode)
-- `gco` - **Add comment below** current line (and enter insert mode)
-- `gcA` - **Add comment at end** of current line (and enter insert mode)
+### Extra Commenting Features (Optional)
+**Note**: Extra features (`gcO`, `gco`, `gcA`) may not work in all configurations.
+- `gcO` - Add comment above current line (and enter insert mode)
+- `gco` - Add comment below current line (and enter insert mode)  
+- `gcA` - Add comment at end of current line (and enter insert mode)
+
+**Core reliable keybindings**: `gcc` and `gc` in visual mode work universally.
 
 ### Modern Community Standard: `gc` Prefix
 
