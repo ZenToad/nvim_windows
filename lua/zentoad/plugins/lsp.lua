@@ -9,7 +9,7 @@ return {
     -- Debug Adapter Protocol (required for rustaceanvim debugging)
     {
         'mfussenegger/nvim-dap',
-        lazy = true,
+        ft = { 'rust' },
         config = function()
             local dap = require('dap')
             
