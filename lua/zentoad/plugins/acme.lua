@@ -1,7 +1,54 @@
     return {
-    -- surround
+    -- Surround: nvim-surround (modern replacement with better UX)
     {
-        'tpope/vim-surround',
+        'kylechui/nvim-surround',
+        version = "*", -- Use for stability; omit to use `main` branch for latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+                keymaps = {
+                    insert = "<C-g>s",
+                    insert_line = "<C-g>S",
+                    normal = "ys",
+                    normal_cur = "yss",
+                    normal_line = "yS",
+                    normal_cur_line = "ySS",
+                    visual = "S",
+                    visual_line = "gS",
+                    delete = "ds",
+                    change = "cs",
+                    change_line = "cS",
+                },
+                -- Add custom surrounds
+                surrounds = {
+                    -- Custom surround for function calls
+                    ["f"] = {
+                        add = function()
+                            local result = require("nvim-surround.config").get_input("Enter the function name: ")
+                            if result then
+                                return { { result .. "(" }, { ")" } }
+                            end
+                        end,
+                        find = "[%w_]+%b()",
+                        delete = "^([%w_]+%()().-(%))()$",
+                        change = {
+                            target = "^([%w_]+)()%(.-%)()()$",
+                            replacement = function()
+                                local result = require("nvim-surround.config").get_input("Enter the function name: ")
+                                if result then
+                                    return { { result }, { "" } }
+                                end
+                            end,
+                        },
+                    },
+                },
+                -- Highlight configuration
+                highlight = {
+                    duration = 2000,
+                },
+            })
+        end,
     },
     -- File Navigation: Harpoon
     {
