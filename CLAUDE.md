@@ -334,3 +334,4 @@ The configuration expects Mononoki Nerd Font. After font changes, the nvim-data 
 ## Windows-Specific Features
 - Loads mswin.vim for Windows-style shortcuts
 - Undo directory set to `~/.vim/undodir`
+- code is only for windows
