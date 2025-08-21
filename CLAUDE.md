@@ -382,6 +382,10 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
 | **Step Out** | `<F12>` | `:lua require('dap').step_out()` | Step out of current function |
 | **Terminate** | `<Shift-F5>` | `:lua require('dap').terminate()` | Stop debugging session |
 | **Debug REPL** | `<leader>dr` | `:lua require('dap').repl.open()` | Open debug console |
+| **Hover Variables** | `<leader>dh` | `:lua require('dap.ui.widgets').hover()` | Show variable under cursor |
+| **Hover Variables (Visual)** | `<leader>dh` (visual mode) | `:lua require('dap.ui.widgets').visual_hover()` | Show selected variable |
+| **View Scopes** | `<leader>ds` | - | Open sidebar with local variables |
+| **View Callstack** | `<leader>df` | - | Open sidebar with function call stack |
 
 #### Debug Setup Test:
 
@@ -400,11 +404,14 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
    - Set breakpoint: `<F9>` or `<leader>db`
    - Debug should start and pause at breakpoint
 
-3. **Debug navigation:**
+3. **Debug navigation and inspection:**
    - Use `<F5>` to continue execution
-   - Use `<F10>` to step over lines
+   - Use `<F10>` to step over lines  
    - Use `<F11>` to step into functions
-   - Use `<leader>dr` to open debug REPL for variable inspection
+   - Use `<leader>dh` with cursor on variable to inspect values
+   - Use `<leader>ds` to view local variables in sidebar
+   - Use `<leader>df` to view callstack in sidebar
+   - Use `<leader>dr` to open debug REPL for interactive evaluation
 
 #### Debug Requirements:
 - ✅ **System debugger**: rustaceanvim uses system `lldb` or `gdb`

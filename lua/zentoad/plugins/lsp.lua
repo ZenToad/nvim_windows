@@ -25,6 +25,24 @@ return {
             vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
             vim.keymap.set('n', '<leader>dc', dap.continue, { desc = 'Debug: Continue' })
             vim.keymap.set('n', '<leader>dr', dap.repl.open, { desc = 'Debug: Open REPL' })
+            
+            -- Variable inspection (best practice: hover and visual eval)
+            vim.keymap.set('n', '<leader>dh', function()
+                require('dap.ui.widgets').hover()
+            end, { desc = 'Debug: Hover Variables' })
+            vim.keymap.set('v', '<leader>dh', function()
+                require('dap.ui.widgets').visual_hover()
+            end, { desc = 'Debug: Hover Variables (Visual)' })
+            
+            -- Callstack and scopes inspection
+            vim.keymap.set('n', '<leader>ds', function()
+                local widgets = require('dap.ui.widgets')
+                widgets.sidebar(widgets.scopes).open()
+            end, { desc = 'Debug: Scopes' })
+            vim.keymap.set('n', '<leader>df', function()
+                local widgets = require('dap.ui.widgets')
+                widgets.sidebar(widgets.frames).open()
+            end, { desc = 'Debug: Frames (Callstack)' })
         end,
     },
     
