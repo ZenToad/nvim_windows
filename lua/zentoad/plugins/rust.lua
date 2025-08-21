@@ -20,5 +20,10 @@ return {
                 },
             }
         end,
+        config = function()
+            -- Rust-specific keybindings
+            vim.keymap.set('n', '<leader>rd', '<cmd>RustLsp debug<cr>', { desc = 'Rust: Start Debug' })
+            vim.keymap.set('n', '<leader>rr', '<cmd>RustLsp runnables<cr>', { desc = 'Rust: Runnables' })
+        end,
     },
 }
