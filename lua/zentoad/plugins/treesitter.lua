@@ -1,40 +1,38 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
+        build = function()
+            -- Skip build on Windows to avoid compilation issues
+            if vim.fn.has('win32') == 1 then
+                return
+            else
+                return ':TSUpdate'
+            end
+        end,
         config = function()
             require('nvim-treesitter.configs').setup {
-                -- Rust-only development parsers (Windows-safe)
-                ensure_installed = {
-                    'rust', 'toml', -- Rust and Cargo.toml support
-                    'lua', 'vim', -- Neovim config files (removed vimdoc due to Windows issues)
-                },
-
-                -- Conservative Windows settings
-                auto_install = false, -- Disable to prevent compilation issues
+                -- Minimal parser set for Windows compatibility
+                ensure_installed = {},  -- Empty - install manually if needed
+                
+                -- Disable auto features that require compilation
+                auto_install = false,
                 sync_install = false,
-
+                
                 highlight = {
                     enable = true,
-                    additional_vim_regex_highlighting = false, -- Better performance
+                    additional_vim_regex_highlighting = false,
                 },
                 
-                -- Modern 2025 features
                 indent = { enable = true },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = "gnn",
-                        node_incremental = "grn",
-                        scope_incremental = "grc",
-                        node_decremental = "grm",
-                    },
-                },
             }
             
-            -- Windows-specific compiler setup
+            -- Windows: Skip compilation entirely
             if vim.fn.has('win32') == 1 then
-                require('nvim-treesitter.install').compilers = { "clang", "gcc" }
+                -- Use built-in vim regex highlighting for now
+                vim.cmd([[
+                    syntax on
+                    filetype plugin indent on
+                ]])
             end
         end
     },
