@@ -287,6 +287,145 @@ cs)]     → [hello]           (change parens to brackets)
 
 The visual highlighting makes learning much easier - you'll see exactly what nvim-surround is doing!
 
+## Rust Development Cheat Sheet
+
+### Prerequisites
+- ✅ `rust-analyzer --version` works in terminal
+- ✅ In a Cargo project directory (with `Cargo.toml`)
+- ✅ Open `.rs` files for full functionality
+
+### LSP Features (Works Automatically)
+
+| Feature | Keybinding | Description | Test With |
+|---------|------------|-------------|-----------|
+| **Hover Documentation** | `K` | Show documentation popup | Put cursor on `println!` and press `K` |
+| **Go to Definition** | `gd` | Jump to where symbol is defined | Cursor on function name, press `gd` |
+| **Find References** | `gr` | Find all uses of symbol | Cursor on variable, press `gr` |
+| **Go to Implementation** | `gi` | Jump to implementation | Cursor on trait/interface, press `gi` |
+| **Code Actions** | `<leader>ca` | Show available code fixes | Cursor on error/warning, press `,ca` |
+| **Rename Symbol** | `<leader>rn` | Rename variable/function | Cursor on variable, press `,rn` |
+| **Format Code** | `<leader>f` | Format current buffer | Press `,f` in any Rust file |
+
+### Completion
+
+| Method | Keybinding | Description | Test With |
+|--------|------------|-------------|-----------|
+| **Manual Completion** | `<C-x><C-o>` | Standard LSP completion | Type `std::` then `Ctrl+X Ctrl+O` |
+| **Alternative Trigger** | `<C-n>` | Alternative completion trigger | Type `std::` then `Ctrl+N` |
+| **Navigate Down** | `<Tab>` | Next completion item | When completion menu is visible |
+| **Navigate Up** | `<Shift-Tab>` | Previous completion item | When completion menu is visible |
+| **Accept Completion** | `<Enter>` | Insert selected completion | When completion menu is visible |
+
+### rustaceanvim Commands
+
+| Command | Description | Test With |
+|---------|-------------|-----------|
+| `:RustLsp hover` | Show enhanced hover | Alternative to `K` |
+| `:RustLsp runnables` | Show available run targets | See cargo run options |
+| `:RustLsp debug` | Debug current target | Start debugging session |
+| `:RustLsp openDocs` | Open documentation | View external docs |
+| `:RustLsp syntaxTree` | Show syntax tree | View AST structure |
+
+### Standard Rust Commands
+
+| Command | Description | Test With |
+|---------|-------------|-----------|
+| `:RustAnalyzer restart` | Restart rust-analyzer | If LSP stops working |
+| `:RustInfo` | Show Rust toolchain info | Check versions and setup |
+| `:RustFmt` | Format current file | Format Rust code |
+
+### Diagnostic Navigation
+
+| Feature | Keybinding | Description | Test With |
+|---------|------------|-------------|-----------|
+| **Next Diagnostic** | `]d` | Jump to next error/warning | Navigate through errors |
+| **Previous Diagnostic** | `[d` | Jump to previous error/warning | Navigate through errors |
+| **Line Diagnostics** | `<leader>dl` | Show diagnostics for current line | Press `,dl` on error line |
+| **All Diagnostics** | `<leader>dq` | Open quickfix with all diagnostics | Press `,dq` to see all errors |
+| **Buffer Diagnostics** | `<leader>do` | Open location list for current buffer | Press `,do` for buffer errors |
+
+### Testing Your Setup
+
+1. **Create test project:**
+   ```bash
+   cargo new rust-test
+   cd rust-test
+   nvim .
+   ```
+
+2. **Open `src/main.rs` and test:**
+   - Add `use std::` and test completion with `<C-n>`
+   - Hover over `println!` with `K`
+   - Try `gd` on `main` function
+   - Add an error and test diagnostic navigation with `]d`
+   - Test code actions with `,ca` on an error
+
+3. **Test compilation:**
+   ```bash
+   :terminal
+   cargo check
+   cargo run
+   ```
+
+### Debugging Rust Code
+
+rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug Adapter Protocol):
+
+| Feature | Command/Keybinding | Description | Test With |
+|---------|-------------------|-------------|-----------|
+| **Show Debug Targets** | `:RustLsp runnables` | List available debug targets | See all runnable/debuggable targets |
+| **Start Debugging** | `:RustLsp debug` | Start debugging current target | Debug main function or tests |
+| **Set Breakpoint** | `<F9>` or `:lua vim.fn.sign_place(0, '', 'DapBreakpoint', line('.'), {})` | Set breakpoint on current line | Click line number or use command |
+| **Continue** | `<F5>` | Continue execution | Resume after breakpoint |
+| **Step Over** | `<F10>` | Step over current line | Execute current line |
+| **Step Into** | `<F11>` | Step into function call | Enter function calls |
+| **Step Out** | `<F12>` | Step out of current function | Exit current function |
+
+#### Debug Setup Test:
+
+1. **Create debug target in `src/main.rs`:**
+   ```rust
+   fn main() {
+       let x = 42;
+       let y = x * 2;
+       println!("Result: {}", y);
+   }
+   ```
+
+2. **Start debugging:**
+   - Run `:RustLsp runnables` to see available targets
+   - Select a debug target or run `:RustLsp debug`
+   - Set breakpoint on `let y = x * 2;` line
+   - Debug should start and pause at breakpoint
+
+3. **Debug navigation:**
+   - Use `<F5>` to continue
+   - Use `<F10>` to step through code
+   - Inspect variables in debug console
+
+#### Debug Requirements:
+- ✅ **System debugger**: rustaceanvim uses system `lldb` or `gdb`
+- ✅ **Debug symbols**: Cargo builds with debug info by default in dev mode
+- ✅ **Cargo project**: Debugging works best in proper Cargo projects
+
+#### Troubleshooting Debug Issues:
+
+| Issue | Solution |
+|-------|----------|
+| No debug targets | Ensure you're in a Cargo project, run `:RustLsp runnables` |
+| Debugger not found | Install `lldb` or ensure it's in PATH: `lldb --version` |
+| Breakpoints not working | Check debug symbols, ensure using debug build |
+| Debug commands missing | Check `:RustLsp<Tab>` shows debug option |
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| No completion | Ensure you're in a Cargo project with `Cargo.toml` |
+| LSP not starting | Run `:RustAnalyzer restart` |
+| No diagnostics | Check `:RustInfo` shows rust-analyzer version |
+| Commands missing | Restart Neovim, check `:Lazy` shows rustaceanvim loaded |
+
 ## Architecture
 
 ### Entry Points

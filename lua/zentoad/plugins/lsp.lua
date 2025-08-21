@@ -1,4 +1,11 @@
 return {
+    -- Tool installer and manager
+    {
+        'williamboman/mason.nvim',
+        build = ':MasonUpdate',
+        opts = {},
+    },
+    
     -- Core LSP Configuration (required by rustaceanvim for standard LSP features)
     {
         'neovim/nvim-lspconfig',
