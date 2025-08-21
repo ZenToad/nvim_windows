@@ -31,6 +31,31 @@ return {
                 group = vim.api.nvim_create_augroup('UserLspComplete', {}),
                 callback = function(ev)
                     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+                    
+                    -- Completion keybindings for the buffer
+                    local opts = { buffer = ev.buf, silent = true }
+                    vim.keymap.set('i', '<C-Space>', '<C-x><C-o>', opts)
+                    vim.keymap.set('i', '<Tab>', function()
+                        if vim.fn.pumvisible() == 1 then
+                            return '<C-n>'
+                        else
+                            return '<Tab>'
+                        end
+                    end, { buffer = ev.buf, expr = true })
+                    vim.keymap.set('i', '<S-Tab>', function()
+                        if vim.fn.pumvisible() == 1 then
+                            return '<C-p>'
+                        else
+                            return '<S-Tab>'
+                        end
+                    end, { buffer = ev.buf, expr = true })
+                    vim.keymap.set('i', '<CR>', function()
+                        if vim.fn.pumvisible() == 1 then
+                            return '<C-y>'
+                        else
+                            return '<CR>'
+                        end
+                    end, { buffer = ev.buf, expr = true })
                 end,
             })
         end,
