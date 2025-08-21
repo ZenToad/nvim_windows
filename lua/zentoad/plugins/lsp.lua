@@ -28,11 +28,24 @@ return {
             
             -- Variable inspection (best practice: hover and visual eval)
             vim.keymap.set('n', '<leader>dh', function()
-                require('dap.ui.widgets').hover()
+                local widgets = require('dap.ui.widgets')
+                widgets.hover(nil, { winopts = { border = 'rounded' } })
             end, { desc = 'Debug: Hover Variables' })
             vim.keymap.set('v', '<leader>dh', function()
-                require('dap.ui.widgets').visual_hover()
+                local widgets = require('dap.ui.widgets')
+                widgets.visual_hover(nil, { winopts = { border = 'rounded' } })
             end, { desc = 'Debug: Hover Variables (Visual)' })
+            
+            -- Close hover windows with Escape
+            vim.keymap.set('n', '<Esc>', function()
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    local buf = vim.api.nvim_win_get_buf(win)
+                    local buf_name = vim.api.nvim_buf_get_name(buf)
+                    if buf_name:match('dap%-hover') then
+                        vim.api.nvim_win_close(win, true)
+                    end
+                end
+            end, { desc = 'Close DAP hover windows' })
             
             -- Callstack and scopes inspection
             vim.keymap.set('n', '<leader>ds', function()
