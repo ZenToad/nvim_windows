@@ -35,6 +35,7 @@ return {
                     -- Completion keybindings for the buffer
                     local opts = { buffer = ev.buf, silent = true }
                     vim.keymap.set('i', '<C-Space>', '<C-x><C-o>', opts)
+                    vim.keymap.set('i', '<C-n>', '<C-x><C-o>', opts) -- Alternative trigger
                     vim.keymap.set('i', '<Tab>', function()
                         if vim.fn.pumvisible() == 1 then
                             return '<C-n>'
