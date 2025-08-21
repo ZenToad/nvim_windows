@@ -371,15 +371,17 @@ The visual highlighting makes learning much easier - you'll see exactly what nvi
 
 rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug Adapter Protocol):
 
-| Feature | Command/Keybinding | Description | Test With |
-|---------|-------------------|-------------|-----------|
-| **Show Debug Targets** | `:RustLsp runnables` | List available debug targets | See all runnable/debuggable targets |
-| **Start Debugging** | `:RustLsp debug` | Start debugging current target | Debug main function or tests |
-| **Set Breakpoint** | `<F9>` or `:lua vim.fn.sign_place(0, '', 'DapBreakpoint', line('.'), {})` | Set breakpoint on current line | Click line number or use command |
-| **Continue** | `<F5>` | Continue execution | Resume after breakpoint |
-| **Step Over** | `<F10>` | Step over current line | Execute current line |
-| **Step Into** | `<F11>` | Step into function call | Enter function calls |
-| **Step Out** | `<F12>` | Step out of current function | Exit current function |
+| Feature | Keybinding | Command | Description |
+|---------|------------|---------|-------------|
+| **Show Debug Targets** | - | `:RustLsp runnables` | List available debug targets |
+| **Start Debugging** | - | `:RustLsp debug` | Start debugging current target |
+| **Toggle Breakpoint** | `<F9>` or `<leader>db` | `:lua require('dap').toggle_breakpoint()` | Set/remove breakpoint on current line |
+| **Continue** | `<F5>` or `<leader>dc` | `:lua require('dap').continue()` | Continue execution |
+| **Step Over** | `<F10>` | `:lua require('dap').step_over()` | Step over current line |
+| **Step Into** | `<F11>` | `:lua require('dap').step_into()` | Step into function call |
+| **Step Out** | `<F12>` | `:lua require('dap').step_out()` | Step out of current function |
+| **Terminate** | `<Shift-F5>` | `:lua require('dap').terminate()` | Stop debugging session |
+| **Debug REPL** | `<leader>dr` | `:lua require('dap').repl.open()` | Open debug console |
 
 #### Debug Setup Test:
 
@@ -395,13 +397,14 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
 2. **Start debugging:**
    - Run `:RustLsp runnables` to see available targets
    - Select a debug target or run `:RustLsp debug`
-   - Set breakpoint on `let y = x * 2;` line
+   - Set breakpoint: `<F9>` or `<leader>db`
    - Debug should start and pause at breakpoint
 
 3. **Debug navigation:**
-   - Use `<F5>` to continue
-   - Use `<F10>` to step through code
-   - Inspect variables in debug console
+   - Use `<F5>` to continue execution
+   - Use `<F10>` to step over lines
+   - Use `<F11>` to step into functions
+   - Use `<leader>dr` to open debug REPL for variable inspection
 
 #### Debug Requirements:
 - ✅ **System debugger**: rustaceanvim uses system `lldb` or `gdb`
@@ -413,9 +416,22 @@ rustaceanvim provides integrated debugging through Neovim's built-in DAP (Debug 
 | Issue | Solution |
 |-------|----------|
 | No debug targets | Ensure you're in a Cargo project, run `:RustLsp runnables` |
-| Debugger not found | Install `lldb` or ensure it's in PATH: `lldb --version` |
+| "nvim-dap is required" | Install nvim-dap plugin and restart Neovim |
+| No debug adapter | Install codelldb via `:MasonInstall codelldb` |
 | Breakpoints not working | Check debug symbols, ensure using debug build |
 | Debug commands missing | Check `:RustLsp<Tab>` shows debug option |
+
+#### Keybinding Setup
+
+This configuration includes standard IDE-style debugging keybindings:
+- **F5**: Continue/Start debugging
+- **F9**: Toggle breakpoint  
+- **F10**: Step over
+- **F11**: Step into
+- **F12**: Step out
+- **Shift-F5**: Terminate debugging
+
+Alternative leader key mappings are also available (`<leader>db`, `<leader>dc`, `<leader>dr`).
 
 ### Troubleshooting
 
