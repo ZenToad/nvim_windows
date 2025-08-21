@@ -6,6 +6,12 @@ return {
         opts = {},
     },
     
+    -- Debug Adapter Protocol (required for rustaceanvim debugging)
+    {
+        'mfussenegger/nvim-dap',
+        lazy = true,
+    },
+    
     -- Core LSP Configuration (required by rustaceanvim for standard LSP features)
     {
         'neovim/nvim-lspconfig',
