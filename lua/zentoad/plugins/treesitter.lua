@@ -4,14 +4,14 @@ return {
         build = ':TSUpdate',
         config = function()
             require('nvim-treesitter.configs').setup {
-                -- Rust-only development parsers
+                -- Rust-only development parsers (Windows-safe)
                 ensure_installed = {
                     'rust', 'toml', -- Rust and Cargo.toml support
-                    'lua', 'vim', 'vimdoc', -- Neovim config files
+                    'lua', 'vim', -- Neovim config files (removed vimdoc due to Windows issues)
                 },
 
-                -- Auto-install missing parsers (2025 recommendation: true for better UX)
-                auto_install = true,
+                -- Conservative Windows settings
+                auto_install = false, -- Disable to prevent compilation issues
                 sync_install = false,
 
                 highlight = {

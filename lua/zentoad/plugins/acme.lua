@@ -214,10 +214,10 @@
                 map_c_w = false,                    -- Map <c-w> to delete a pair if possible
             })
             
-            -- Integration with nvim-cmp if available
-            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            -- Integration with nvim-cmp if available (optional)
             local ok, cmp = pcall(require, 'cmp')
             if ok then
+                local cmp_autopairs = require('nvim-autopairs.completion.cmp')
                 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
             end
         end,
